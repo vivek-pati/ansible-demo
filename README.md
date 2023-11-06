@@ -36,3 +36,20 @@ ping into the mashines using ansible
 [Simple Web App](APPSETUP_README.md)
 
 https://github.com/mmumshad/ansible-training-answer-keys-2/blob/master/Section_3_HostVars_Include/Exercise_4/playbook.yml
+galaxy.ansibl.com
+
+docs.ansible.com
+## Strategy 
+
+### Liner Strategy 
+All the tasks are executed in the same time in all servers- eg : Dependency, Install DB, Python Flask, Run server. It waits for the 1st task to complete in all servers before it moves to next. This is the default strategy 
+
+### Free Strategy 
+
+Tasks in each servers executed in the same time but doesnt wait for the task on other server to complete unlike linear. As soon a task is completed in one server it moves to other. 
+
+### Batch Strategy 
+This is based on linear strategy , instead of executing task in all the servers, it triggers on batch based on the field ( serial : 3)
+can talk to 30 % as well. 
+
+Note** : ansible.cfg has property called forks , default =5 . This is the number of servers that ansible can communicate in a single point of time. This can be increased to any desired number but you controller should have the CPU and network bandwidth to do this operation. 
