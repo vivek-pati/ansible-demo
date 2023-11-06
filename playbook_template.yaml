@@ -1,0 +1,81 @@
+# Ansible uses Jinja2 template
+# Use Jinja 2 template to remove the hardcoded 
+-
+  name: Test Jinja2 Templating
+  hosts: localhost
+  vars:
+    first_name: james
+    last_name: bond
+  tasks:
+  - debug:
+      msg: 'The name is {{ last_name }}! {{ first_name }} {{ last_name }}!'
+
+# To print the name in Title Case
+-
+  name: Test Jinja2 Templating
+  hosts: localhost
+  vars:
+    first_name: james
+    last_name: bond
+  tasks:
+  - debug:
+      msg: 'The name is {{ last_name | title }}! {{ first_name | title }} {{ last_name | title }}!'
+
+# Print the lowest number
+-
+  name: Test Jinja2 Templating
+  hosts: localhost
+  vars:
+    array_of_numbers:
+      - 12
+      - 34
+      - 06
+      - 34
+  tasks:
+  - debug:
+      msg: 'Lowest = {{ array_of_numbers | min }}'
+
+
+# Run unique task 
+
+-
+  name: Install Dependencies
+  hosts: localhost
+  vars:
+    web_dependencies:
+         - python
+         - python-setuptools
+         - python-dev
+         - build-essential
+         - python-pip
+         - python-mysqldb
+    sql_dependencies:
+         - python
+         - python-mysqldb
+  tasks:
+  - name: Install dependencies
+    apt: name='{{ item }}' state=present
+    with_items: '{{  sql_dependencies | union(web_dependencies) }}'
+
+# Generate Random File name 
+-
+  name: Generate random file name
+  hosts: localhost
+  tasks:
+  - name: Create file
+    file:
+      path: /tmp/random_file"{{ 1000 | random }}"
+      state: touch
+
+# Get if the IP address is valid 
+
+-
+  name: Test valid IP Address
+  hosts: localhost
+  vars:
+    ip_address: 192.168.1.6
+  tasks:
+  - name: Test IP Address
+    debug:
+      msg: IP Address = {{ ip_address | ipaddr }} # ipaddr does the validation. 
+
